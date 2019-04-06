@@ -174,6 +174,10 @@ Add two-factor authentication (2FA).  There are several NuGet packages which tie
 
 Find a good tradeoff between convenience and security with respect to timeouts.  Leaving a person signed in longer is convenient, but expands the window that an attacker has to squirm into a session.
 
+---
+
+### Other Advice
+
 There are two timeout techniques:  sliding window and fixed-length.  With sliding window timeouts, you have a 30-minute (or so) window and each activity pushes the endtime back to 30 minutes.  With fixed-length timeouts, you have a hard stop regardless of activity.If you want a fixed-length timeout, modify the web.config thusly:
 
 `<forms slidingExpiration="false" >`
@@ -215,9 +219,9 @@ For data that you don't need to access later (like plaintext passwords to your s
 
 ### Solutions
 
-Use strong adaptive algorithms for password storage.  Use key derivation functions like <strong>PBKDF2</strong> and password hashes like <strong>bcrypt</strong>, <strong>scrypt</strong>, or <strong>Argon2i</strong>.  Use an arbitrarily large number of iterations with a good salt.
+Use strong adaptive algorithms for password storage.  Use key derivation functions like <strong>PBKDF2</strong> and password hashes like <strong>bcrypt</strong>, <strong>scrypt</strong>, or <strong>Argon2i</strong>.  Use a large number of iterations with a good salt.
 
-ASP.Net MVC 4 crypto uses PBKDF2 with 1000 iterations, but you cannot customize the number of iterations, and there is a security benefit in running some arbitrary number of times.
+ASP.Net MVC 4 crypto uses PBKDF2 with 1000 iterations, but you cannot customize the number of iterations.
 
 Zetetic has a NuGet package which uses BCrypt and 5000 iterations of PBKDF2.
 
@@ -307,15 +311,18 @@ Those entities can also include filesystem files.  XXE attacks happen when an at
 	<!ENTITY user "Bob">
 	<!ENTITY accessLevel "medium">
 	<!ENTITY favoriteColor "blue">
-	<!ENTITY greeting "Hello, &user;.  I see your access level today is &accessLevel; and your favorite color is &favoriteColor; - that's my favorite color too!">
+	<!ENTITY greeting "Hello, &user;.  I see your access
+		level today is &accessLevel; and your favorite
+		color is &favoriteColor; - that's my favorite
+		color too!">
 ]>
 <doc>&greeting;</doc>
 ```
-@[1-6](An XML document with external entities.)
+@[1-9](An XML document with external entities.)
 @[2](Define the "user" entity with the value "Bob")
 @[3-4](Define the "accessLevel" and "favoriteColor" entities.)
-@[5](Define the "greeting" entity using prior entities.)
-@[7](Display the value in the "greeting" entity.)
+@[5-8](Define the "greeting" entity using prior entities.)
+@[10](Display the value in the "greeting" entity.)
 
 ---
 
@@ -354,6 +361,10 @@ Safe by default:
 * `XmlReader`
 * `XslCompiledTransform`
 
+---
+
+### .NET Parsers
+
 Safe in .NET 4.5.2 or later and **unsafe** before:
 * `XmlDocument`
 * `XmlTextReader`
@@ -364,6 +375,10 @@ Safe in .NET 4.5.2 or later and **unsafe** before:
 ### What "Safe" Means
 
 Safety here usually means prohibiting DTDs (Document Type Definitions).  As of .NET 4.0, you have three options:  prohibit DTDs and throw an exception if you receive a file with a DTD; ignore the DTD but parse the file otherwise; or parse the DTD.
+
+---
+
+### What "Safe" Means
 
 You should <strong>never</strong> accept untrusted XML documents with DTDs.  Unless you know the origin of the XML file and can ensure that there are no external entity references, you should ignore or prohibit DTDs.
 
@@ -386,6 +401,10 @@ static void LoadXML()
 ```
 @[3-5](Inject a path request in an XML file.)
 @[6-8](Setting `XmlResolver` to `null` disables DTDs.  This is the secure approach.)
+
+---?image=presentation/assets/background/demo.jpg&size=cover&opacity=20
+
+### Demo Time
 
 ---
 
@@ -507,7 +526,8 @@ Rapid7 estimated in 2013 that one in six S3 buckets are available to the public.
 Set custom errors on:
 
 ```xml
-<customErrors mode="On" defaultRedirect="Error.aspx" redirectMode="ResponseRewrite" />
+<customErrors mode="On" defaultRedirect="Error.aspx"
+	redirectMode="ResponseRewrite" />
 ```
 
 (Or use RemoteOnly).
@@ -602,7 +622,8 @@ Beat XSS with defense in depth.  First, use an output encoding library.  Microso
 NuGet also has the AntiXSS library, meant for old versions of the .NET Framework prior to when they built this in.  This library can encode JavaScript, XML, LDAP, CSS, etc. code.  For example:  
 
 ```csharp
-Microsoft.Security.Application.Encoder.JavaScriptEncode("some string");
+Microsoft.Security.Application.Encoder.
+	JavaScriptEncode("some string");
 ```
 
 ---
@@ -674,7 +695,7 @@ You can use the `X-XSS-Protection` browser header to add an additional layer of 
 
 ### Content Security Policies
 
-You can also use Content Security Policies to protect against attacks.  With a CSP, you can define valid domains and subdomains for things like:
+You can use Content Security Policies to define valid domains and subdomains for:
 
 * JavaScript
 * Cascading Stylesheets
@@ -682,8 +703,6 @@ You can also use Content Security Policies to protect against attacks.  With a C
 * Fonts
 * HTML5 Media (audio, video, etc.)
 * Child frames
-
-This helps because user-defined data could be exposed from a different subdomain, one without access to execute JavaScript code or open iframes.
 
 ---
 
@@ -705,7 +724,7 @@ This helps because user-defined data could be exposed from a different subdomain
 
 ### Insecure Deserialization
 
-Deserialization attacks really came onto the scene in 2015, when security researchers found serialization vulnerabilities in Java.  We saw that attackers could perform remote code execution by sending serialized code to a number of applications, all of which use Java's "commons collections" library, a very popular library.  Vulnerable applications included WebLogic, WebSphere, JBoss, Jenkins, etc.
+Deserialization attacks came onto the scene in 2015, when security researchers found serialization vulnerabilities in Java.  Attackers could perform remote code execution by sending serialized code to applications which use Java's "commons collections" library, a very popular library.  Vulnerable applications included WebLogic, WebSphere, JBoss, Jenkins, etc.
 
 Since then, we've learned that .NET applications are also vulnerable.
 
@@ -713,9 +732,9 @@ Since then, we've learned that .NET applications are also vulnerable.
 
 ### Insecure Deserialization
 
-The most common deserialization attack is in JSON deserialization, as seen in Breeze and NancyFX.  There was also an XML deserialization flaw in DotNetNuke.
+In .NET, Breeze and NancyFX had JSON deserialization flaws.  There was also an XML deserialization flaw in DotNetNuke.
 
-Newtonsoft's JSON.Net parser is relatively safe, but Breeze uses it and ended up being vulnerable due to coding choices.  Breeze configured JSON.Net to use <code>TypeNameHandling.All</code> and had a Tag object in its SaveOptions class:
+Newtonsoft's JSON.Net parser is relatively safe, but Breeze was vulnerable due to coding choices.  Breeze configured JSON.Net to use <code>TypeNameHandling.All</code> and had a Tag object in its SaveOptions class:
 
 ```csharp
 public class SaveOptions {
@@ -728,15 +747,15 @@ public class SaveOptions {
 
 ### Insecure Deserialization
 
-f you deserialize into a `FileSystemInfo` object and an attacker sends a string where part of the path begins with `~` (e.g., `\\SomeServer\~MyShare`), then Windows automatically calls `GetLongPathName()` on the string.  If the path is a UNC path, Windows makes an SMB request, and an attacker might be able to perform SMB credential relaying if the attacker is on your local network.
+If you deserialize into a `FileSystemInfo` object and an attacker sends a string where part of the path begins with `~` (e.g., `\\SomeServer\~MyShare`), then Windows automatically calls `GetLongPathName()` on the string.  If the path is a UNC path, Windows makes an SMB request, and an attacker might be able to perform SMB credential relaying if the attacker is on your local network.
 
 ---
 
 ### Solutions
 
-Serialize <strong>data</strong>, not objects.  The biggest risk with deserialization attacks is around binary serialization.  If you have straight data in JSON or XML format and you prevent your deserializer from converting untrusted serialized inputs into objects, you should be safe.
+Serialize <strong>data</strong>, not objects.  If you have straight data in JSON or XML format and you prevent your deserializer from converting untrusted serialized inputs into objects, you should be safe.
 
-When you deserialize objects, deserialize them into specific defined types, ideally classes within custom assemblies.  Don't deserialize to Object, IRunnable, or other low-level classes or interfaces.  You could deserialize to sealed classes so attackers cannot create derived classes from your class.
+Deserialize objects into specific defined types, ideally classes within custom assemblies.  Don't deserialize to Object, IRunnable, or other low-level classes or interfaces.  Sealed classes can help here.
 
 Never deserialize untrusted binary objects.
 
@@ -837,9 +856,9 @@ Gut check time:
 
 ### Solutions
 
-Determine what high-value scenarios can occur in your system.  For example, significant settings changes, transfers of funds, chains of failed login attempts followed by a successful attempt, and potential injection attacks (e.g., SQL injection attempt, Cross-Site Scripting attempt, deserialization attack attempt, XML External Entity attempt).  Log these as well as other things which might indicate an attacker or fraudulent behavior.
+Think about high-value things to log:  significant settings changes, transfers of funds, chains of failed login attempts followed by a successful attempt, and potential injection attacks.  Log these as well as other things which might indicate an attacker or fraudulent behavior.
 
-Simply having the data is an important part of the process, but that's only half the battle.  Then, somebody should read the log and understand what actions to take:  perform an audit, blackhole an IP address, etc.
+Simply having the data is an important part of the process.  Then, somebody should read the log and understand what actions to take:  perform an audit, blackhole an IP address, etc.
 
 ---
 
@@ -851,7 +870,7 @@ Things you may want to log:
 * Authentication successes and failures
 * Authorization successes and failures
 * Tampering:  session cookies, querystrings
-* Application errors, especially syntax and runtime errors
+* Application errors (syntax and runtime errors)
 * High-risk functionality:  adding/removing users, assigning important permissions, sysadmin duties, accessing sensitive data, data imports
 
 ---
@@ -875,8 +894,7 @@ Details you should <strong>not</strong> have:
 
 * Application source code
 * Session IDs, access tokens, passwords
-* Database connection strings
-* Encryption keys
+* Database connection strings, encryption keys
 * Sensitive personal information:  name, payment card data, bank account data, PHI
 * Information which is illegal to collect or where a user has opted out of collection
 
