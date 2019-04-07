@@ -36,7 +36,7 @@
 </div>
 @snapend
 
----
+---?image=presentation/assets/background/wasp.jpg&size=cover&opacity=20
 
 ### OWASP
 
@@ -44,7 +44,7 @@ The Open Web Application Security Project is an online community founded in 2001
 
 As an organization, they release free penetation testing tools, write books on software security, and host user groups with chapters all around the world.
 
----
+---?image=presentation/assets/background/list.jpg&size=cover&opacity=20
 
 ### OWASP Top 10
 
@@ -76,7 +76,7 @@ As a logistical note, covering ten threats means we will spend an average of fiv
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/injection.jpg&size=cover&opacity=20
 
 ### Injection
 
@@ -84,7 +84,7 @@ SQL injection is the most common injection attack, but there are others, includi
 
 Injection attacks are possible whenever we are building strings which include untrusted information in one context to execute in another context.  This is most common when crossing language and tier boundaries.
 
----
+---?image=presentation/assets/background/test.jpg&size=cover&opacity=20
 
 ### Injection
 
@@ -98,7 +98,7 @@ In this sense, the existence of SQL injection is an organizational bellwether:  
 
 The single best thing you can do to protect against SQL injection is to <strong>parameterize your queries</strong>.  Non-terrible ORMs and stored procedures can both do this, though it is possible to misuse either.  If you feel the urge to execute SQL passed in as a parameter, don't do it.
 
----
+---?image=presentation/assets/background/police.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -106,13 +106,13 @@ From there, <strong>whitelists</strong> work.  Use whitelists to limit the domai
 
 Blacklisting particular words is <strong>not</strong> a good solution because industrious people will find ways around your blacklist.
 
----
+---?image=presentation/assets/background/brick-wall.jpg&size=cover&opacity=20
 
 ### Solutions
 
 You can also use a <strong>Web Application Firewall</strong> to intercept potentially malicious queries.  These prevent many potential attacks from getting through but they are not perfect.  It is possible to bypass Web Application Firewalls once you understand how they behave, but they will protect against the majority of noise.
 
----
+---?image=presentation/assets/background/presentation.jpg&size=cover&opacity=20
 
 ### More Details
 
@@ -134,13 +134,13 @@ If you want a more detailed analysis of SQL injection, I have a talk on the topi
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/broken-plate.jpg&size=cover&opacity=20
 
 ### Broken Authentication
 
 Broken authentication and session management includes flaws in the frameworks we use for authentication or session management.  If an attacker is able to do something like access exposed accounts or passwords or hijack a session ID, that attacker can now impersonate a valid user.
 
----
+---?image=presentation/assets/background/visitor-passes.jpg&size=cover&opacity=20
 
 ### Broken Authentication
 
@@ -154,35 +154,39 @@ Store sensitive information in cookies rather than as part of the querystring or
 
 If you want to screw up, you can do so with this web.config setting:
 
-`<sessionState cookieless="UseURI" />`
+```xml
+<sessionState cookieless="UseURI" />
+```
 
----
+---?image=presentation/assets/background/checkpoint-charlie.jpg&size=cover&opacity=20
 
 ### Solutions
 
 Use tried and tested authentication methods rather than rolling your own.  These are less likely to have major security vulnerabilities than code written by a team of non-specialists.  In .NET, there is the ASP.Net MVC Identity system.
 
----
+---?image=presentation/assets/background/phone.jpg&size=cover&opacity=20
 
 ### Solutions
 
 Add two-factor authentication (2FA).  There are several NuGet packages which tie together the Microsoft Identity Framework and Google Authenticator.  <a href="https://www.owasp.org/index.php/Adding_two-factor_authentication_to_ASP.NET">OWASP also has a tutorial on using one of them</a>.
 
----
+---?image=presentation/assets/background/alarm-clock.jpg&size=cover&opacity=20
 
 ### Other Advice
 
 Find a good tradeoff between convenience and security with respect to timeouts.  Leaving a person signed in longer is convenient, but expands the window that an attacker has to squirm into a session.
 
----
+---?image=presentation/assets/background/window.jpg&size=cover&opacity=20
 
 ### Other Advice
 
-There are two timeout techniques:  sliding window and fixed-length.  With sliding window timeouts, you have a 30-minute (or so) window and each activity pushes the endtime back to 30 minutes.  With fixed-length timeouts, you have a hard stop regardless of activity.If you want a fixed-length timeout, modify the web.config thusly:
+There are two timeout techniques:  sliding window and fixed-length.  Sliding window moves the expiration time back with every action.  Fixed-length forces a hard stop, which you can change in web.config:
 
-`<forms slidingExpiration="false" >`
+```xml
+<forms slidingExpiration="false" >
+```
 
----
+---?image=presentation/assets/background/key.jpg&size=cover&opacity=20
 
 ### Other Advice
 
@@ -207,11 +211,11 @@ There are two timeout techniques:  sliding window and fixed-length.  With slidin
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/silent.jpg&size=cover&opacity=20
 
 ### Sensitive Data Exposure
 
-Encrypt sensitive data that you need to access later.  This includes data in databases, data in configuration files, data in backups, data in extracts, etc.
+Encrypt sensitive data that you need to access later.  This includes data in databases, configuration files, backups, extracts, etc.
 
 For data that you don't need to access later (like plaintext passwords to your systems), keep a hash of the data.  But don't use algorithms like MD5 or SHA1; they're fine for many uses, but <strong>not</strong> for secure hashes.
 
@@ -225,7 +229,7 @@ ASP.Net MVC 4 crypto uses PBKDF2 with 1000 iterations, but you cannot customize 
 
 Zetetic has a NuGet package which uses BCrypt and 5000 iterations of PBKDF2.
 
----
+---?image=presentation/assets/background/raspberry-pi.jpg&size=cover&opacity=20
 
 ### Solution History
 
@@ -236,7 +240,7 @@ Each method has its own weaknesses:
 * SCrypt is strong against FPGAs (exponential CPU and exponential memory) but is newer (2009 versus 1999) and not quite as vetted
 * The Argon2 series is even newer than SCrypt (2015) but you can scale memory and CPU independently
 
----
+---?image=presentation/assets/background/hammer.jpg&size=cover&opacity=20
 
 ### Performance versus Safety
 
@@ -254,7 +258,7 @@ Without a good hash + salt, an attacker can use a rainbow table, which is a reve
 
 <img src="presentation/assets/image/RainbowTable.png" />
 
----
+---?image=presentation/assets/background/skeleton-keys.jpg&size=cover&opacity=20
 
 ### Key Types
 
@@ -262,7 +266,7 @@ When you need to encrypt data, know the difference between symmetric and asymmet
 
 Asymmetric keys are good when you want different computers to communicate data back and forth.
 
----
+---?image=presentation/assets/background/key-hanging.jpg&size=cover&opacity=20
 
 ### Key Security
 
@@ -272,7 +276,7 @@ Whichever you choose, secure the keys.  Don't store them in source control or co
 
 Valid scopes:  `CurrentUser` and `LocalMachine`.
 
----
+---?image=presentation/assets/background/lockbox.jpg&size=cover&opacity=20
 
 ### Other Tips
 
@@ -296,7 +300,7 @@ Valid scopes:  `CurrentUser` and `LocalMachine`.
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/looking-glass.jpg&size=cover&opacity=20
 
 ### XML External Entities
 
@@ -324,7 +328,7 @@ Those entities can also include filesystem files.  XXE attacks happen when an at
 @[5-8](Define the "greeting" entity using prior entities.)
 @[10](Display the value in the "greeting" entity.)
 
----
+---?image=presentation/assets/background/magnifying-glass.jpg&size=cover&opacity=20
 
 ### These Look Familiar
 
@@ -350,7 +354,7 @@ Our attack can take advantage of entities, specifically importation of external 
 @[2-3](Define what you'd like to see, including external resources.)
 @[4-7](Get the results in an XML document.)
 
----
+---?image=presentation/assets/background/books.jpg&size=cover&opacity=20
 
 ### .NET Parsers
 
@@ -361,7 +365,7 @@ Safe by default:
 * `XmlReader`
 * `XslCompiledTransform`
 
----
+---?image=presentation/assets/background/unsafe.jpg&size=cover&opacity=20
 
 ### .NET Parsers
 
@@ -370,7 +374,7 @@ Safe in .NET 4.5.2 or later and **unsafe** before:
 * `XmlTextReader`
 * `XmlPathNavigator`
 
----
+---?image=presentation/assets/background/safe.jpg&size=cover&opacity=20
 
 ### What "Safe" Means
 
@@ -406,7 +410,7 @@ static void LoadXML()
 
 ### Demo Time
 
----
+---?image=presentation/assets/background/stop.jpg&size=cover&opacity=20
 
 ### Final Recommendation
 
@@ -428,7 +432,7 @@ static void LoadXML()
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/broken-window.jpg&size=cover&opacity=20
 
 ### Broken Access Control
 
@@ -444,7 +448,7 @@ Or if I try IsAdmin=1?
 
 <img src="presentation/assets/image/IsAdmin.png" />
 
----
+---?image=presentation/assets/background/arrow.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -452,7 +456,7 @@ With surrogate keys, use nonguessable values.  Incrementing keys are great for d
 
 A solution here is <strong>indirect object references</strong>.
 
----
+---?image=presentation/assets/background/map.jpg&size=cover&opacity=20
 
 ### Indirect Object References
 
@@ -466,7 +470,7 @@ You can use `System.Security.Cryptography.RNGCryptoServiceProvider` to generate 
 
 <img src="presentation/assets/image/PHPSession.png" />
 
----
+---?image=presentation/assets/background/passport.jpg&size=cover&opacity=20
 
 ### Access Control
 
@@ -490,7 +494,7 @@ Indirect object references are a supplement; access control checks are the prima
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/broken-fence.jpg&size=cover&opacity=20
 
 ### Security Misconfiguration
 
@@ -507,7 +511,7 @@ Bad idea:  exposing Elmah data to the broader internet.
 
 <img src="presentation/assets/image/Elmah.png" />
 
----
+---?image=presentation/assets/background/bucket.jpg&size=cover&opacity=20
 
 ### Security Misconfiguration
 
@@ -534,7 +538,7 @@ Set custom errors on:
 
 This creates a custom page and redirectMode hides that there was ever an error and never shows the end user that there was a 500 error.  This will cause the web purists pain but prevents potential configuration exposure.
 
----
+---?image=presentation/assets/background/contrails.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -544,7 +548,7 @@ Secure trace.asd.  Limit what you write to trace.  For example, don't write conn
 <trace enabled="false">
 ```
 
----
+---?image=presentation/assets/background/library.jpg&size=cover&opacity=20
 
 ### Other Solutions
 
@@ -552,7 +556,7 @@ Secure trace.asd.  Limit what you write to trace.  For example, don't write conn
 * Disable or remove unnecessary ports, services, pages, accounts, privileges, etc.
 * Encrypt sensitive web.config details
 
----
+---?image=presentation/assets/background/lock.jpg&size=cover&opacity=20
 
 ### Web.Config Encryption
 
@@ -564,7 +568,7 @@ aspnet_regiis -site "sitename" -app "/" -pe "connectionStrings"
 
 This uses the RSA key on the server to perform symmetric encryption on web.config's connection strings.
 
----
+---?image=presentation/assets/background/construction.jpg&size=cover&opacity=20
 
 ### Security at Compile Time
 
@@ -587,13 +591,13 @@ This uses the RSA key on the server to perform symmetric encryption on web.confi
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/greenscreen.jpg&size=cover&opacity=20
 
 ### Cross-Site Scripting
 
 Cross-site scripting is where you get a user to execute unexpected code on a website.  It is very similar to injection attacks, but focuses around JavaScript, CSS, or HTML rather than SQL, LDAP, etc.
 
----
+---?image=presentation/assets/background/mirror.jpg&size=cover&opacity=20
 
 ### Cross-Site Scripting
 
@@ -603,13 +607,13 @@ There are two major themes with XSS:  reflected and persistent.
 
 <strong>Persistent</strong> XSS is where an attacker is able to save malicious code in a database and have it appear without needing a reflection link.
 
----
+---?image=presentation/assets/background/fishing.jpg&size=cover&opacity=20
 
 ### Cross-Site Scripting
 
 There are several things you can do once you have exploited a Cross-Site Scripting vulnerability.  You can run arbitrary scripts, access objects in the DOM, and even redirect unwary users to another site, such as a phishing site meant to harvest credentials.
 
----
+---?image=presentation/assets/background/levels.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -626,13 +630,13 @@ Microsoft.Security.Application.Encoder.
 	JavaScriptEncode("some string");
 ```
 
----
+---?image=presentation/assets/background/pig.jpg&size=cover&opacity=20
 
 ### Solutions
 
 If you're using ASP.NET MVC, the Razor view engine auto-encodes by default when you use `@object` or `Html.Encode()`.  If you want to restore markup, use `Html.Raw()`.
 
----
+---?image=presentation/assets/background/paper-stack.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -646,7 +650,7 @@ Ever get this error?
 
 <img src="presentation/assets/image/potentiallydangerousrequest.png" />
 
----
+---?image=presentation/assets/background/monkey.jpg&size=cover&opacity=20
 
 ### Potentially Dangerous Request
 
@@ -662,7 +666,7 @@ In general, you want these protections, so go to web.config and make sure to set
 <pages validateRequest="true">
 ```
 
----
+---?image=presentation/assets/background/calculator.jpg&size=cover&opacity=20
 
 ### Potentially Dangerous Request
 
@@ -685,13 +689,13 @@ For ASP.Net MVC, you can decorate model attributes to ignore enoding:
 public string Password { get; set; }
 ```
 
----
+---?image=presentation/assets/background/picket-fence.jpg&size=cover&opacity=20
 
 ### Browser Headers
 
 You can use the `X-XSS-Protection` browser header to add an additional layer of protection against Cross-Site Scripting attack attempts.  This works for pretty much every browser except Firefox.
 
----
+---?image=presentation/assets/background/security-camera.jpg&size=cover&opacity=20
 
 ### Content Security Policies
 
@@ -720,7 +724,7 @@ You can use Content Security Policies to define valid domains and subdomains for
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/cappuccino.jpg&size=cover&opacity=20
 
 ### Insecure Deserialization
 
@@ -734,7 +738,7 @@ Since then, we've learned that .NET applications are also vulnerable.
 
 In .NET, Breeze and NancyFX had JSON deserialization flaws.  There was also an XML deserialization flaw in DotNetNuke.
 
-Newtonsoft's JSON.Net parser is relatively safe, but Breeze was vulnerable due to coding choices.  Breeze configured JSON.Net to use <code>TypeNameHandling.All</code> and had a Tag object in its SaveOptions class:
+Breeze used Newtonsoft's JSON.Net parser (which is safe) in an unsafe way, using `TypeNameHandling.All` on an `Object` type:
 
 ```csharp
 public class SaveOptions {
@@ -743,13 +747,13 @@ public class SaveOptions {
 }
 ```
 
----
+---?image=presentation/assets/background/path.jpg&size=cover&opacity=20
 
 ### Insecure Deserialization
 
 If you deserialize into a `FileSystemInfo` object and an attacker sends a string where part of the path begins with `~` (e.g., `\\SomeServer\~MyShare`), then Windows automatically calls `GetLongPathName()` on the string.  If the path is a UNC path, Windows makes an SMB request, and an attacker might be able to perform SMB credential relaying if the attacker is on your local network.
 
----
+---?image=presentation/assets/background/data.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -759,7 +763,7 @@ Deserialize objects into specific defined types, ideally classes within custom a
 
 Never deserialize untrusted binary objects.
 
----
+---?image=presentation/assets/background/lines.jpg&size=cover&opacity=20
 
 ### Other Solutions
 
@@ -783,7 +787,7 @@ Never deserialize untrusted binary objects.
 9. **Using Components with Known Vulnerabilities**
 10. Insufficient Logging and Monitoring
 
----
+---?image=presentation/assets/background/broken-chalk.jpg&size=cover&opacity=20
 
 ### Using Broken Stuff
 
@@ -793,7 +797,7 @@ Things to think about:
 * Old HTTP security protocols (e.g., TLS 1.0 or 1.1)
 * Software with known backdoors or malicious components
 
----
+---?image=presentation/assets/background/broken-wall.jpg&size=cover&opacity=20
 
 ### Using Broken Stuff
 
@@ -801,7 +805,7 @@ Maybe you should update that out-of-date version of Struts with known vulnerabil
 
 Maybe you should update that out-of-date version of Wordpress with known vulnerabilities before somebody finds and pops your...too late.
 
----
+---?image=presentation/assets/background/library2.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -834,7 +838,7 @@ This can be a time-consuming exercise, particularly for large companies with a g
 9. Using Components with Known Vulnerabilities
 10. **Insufficient Logging and Monitoring**
 
----
+---?image=presentation/assets/background/logs.jpg&size=cover&opacity=20
 
 ### Logging and Monitoring
 
@@ -846,13 +850,13 @@ Gut check time:
 * Do you ever look at those logs?
 * Do you know what to look for in those logs?
 
----
+---?image=presentation/assets/background/bonfire.jpg&size=cover&opacity=20
 
 ### Logging and Monitoring
 
 .NET has a number of logging frameworks, including Elmah.  You can also write out log messages to an external log collection process (Splunk, Logstash, Flume).
 
----
+---?image=presentation/assets/background/problem.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -860,7 +864,7 @@ Think about high-value things to log:  significant settings changes, transfers o
 
 Simply having the data is an important part of the process.  Then, somebody should read the log and understand what actions to take:  perform an audit, blackhole an IP address, etc.
 
----
+---?image=presentation/assets/background/tree.jpg&size=cover&opacity=20
 
 ### Solutions
 
@@ -873,7 +877,7 @@ Things you may want to log:
 * Application errors (syntax and runtime errors)
 * High-risk functionality:  adding/removing users, assigning important permissions, sysadmin duties, accessing sensitive data, data imports
 
----
+---?image=presentation/assets/background/space.jpg&size=cover&opacity=40
 
 ### Solutions
 
@@ -886,7 +890,7 @@ Details you should have:
 
 This list is **NOT** comprehensive!
 
----
+---?image=presentation/assets/background/prepare-to-stop.jpg&size=cover&opacity=20
 
 ### Solutions
 
