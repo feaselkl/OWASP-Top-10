@@ -211,7 +211,7 @@ There are two timeout techniques:  sliding window and fixed-length.  Sliding win
 9. Using Components with Known Vulnerabilities
 10. Insufficient Logging and Monitoring
 
----?image=presentation/assets/background/silent.jpg&size=cover&opacity=20
+---?image=presentation/assets/background/silent.jpg&size=cover&opacity=35
 
 ### Sensitive Data Exposure
 
@@ -240,7 +240,7 @@ Each method has its own weaknesses:
 * SCrypt is strong against FPGAs (exponential CPU and exponential memory) but is newer (2009 versus 1999) and not quite as vetted
 * The Argon2 series is even newer than SCrypt (2015) but you can scale memory and CPU independently
 
----?image=presentation/assets/background/hammer.jpg&size=cover&opacity=20
+---?image=presentation/assets/background/hammer.jpg&size=cover&opacity=40
 
 ### Performance versus Safety
 
