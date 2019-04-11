@@ -217,7 +217,7 @@ There are two timeout techniques:  sliding window and fixed-length.  Sliding win
 
 Encrypt sensitive data that you need to access later.  This includes data in databases, configuration files, backups, extracts, etc.
 
-For data that you don't need to access later (like plaintext passwords to your systems), keep a hash of the data.  But don't use algorithms like MD5 or SHA1; they're fine for many uses, but <strong>not</strong> for secure hashes.
+For data that you don't need to access later (like plaintext passwords to your systems), keep a hash of the data.  But don't use algorithms like MD5 or SHA1; they're fine for many uses, but <strong>not</strong> for secure password hashes.
 
 ---
 
@@ -570,7 +570,7 @@ This uses the RSA key on the server to perform symmetric encryption on web.confi
 
 ---?image=presentation/assets/background/construction.jpg&size=cover&opacity=20
 
-### Security at Compile Time
+### Security at Deploy Time
 
 * Use web.config transformations to configure defensively on deployment, removing debugging and tracing logic just in case somebody accidentally includes it in the build.
 * Ensure security within the build.  For example:  fail the build if you have the debug flag set.
@@ -862,7 +862,7 @@ Gut check time:
 
 Think about high-value things to log:  significant settings changes, transfers of funds, chains of failed login attempts followed by a successful attempt, and potential injection attacks.  Log these as well as other things which might indicate an attacker or fraudulent behavior.
 
-Simply having the data is an important part of the process.  Then, somebody should read the log and understand what actions to take:  perform an audit, blackhole an IP address, etc.
+Simply having the data is an important part of the process.  Then, somebody should read the log and understand what actions to take:  investigate further, blackhole an IP address, etc.
 
 ---?image=presentation/assets/background/tree.jpg&size=cover&opacity=20
 
