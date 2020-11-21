@@ -2,39 +2,36 @@
 .reveal section img { background:none; border:none; box-shadow:none; }
 </style>
 
-## A .NET Developer's View Of The OWASP Top 10
+## A .NET Developer's View
+## Of The OWASP Top 10
 
-<a href="http://www.catallaxyservices.com">Kevin Feasel</a> (<a href="https://twitter.com/feaselkl">@feaselkl</a>)
+<a href="http://www.catallaxyservices.com">Kevin Feasel</a> (<a href="https://twitter.com/feaselkl">@feaselkl</a>)<br />
 <a href="http://csmore.info/on/owasp">http://CSmore.info/on/owasp</a>
 
 ---
 
 @title[Who Am I?]
 
-@div[left-60]
+[drag=60 100, drop=0 0]
 <table>
-	<tr>
-		<td><a href="https://csmore.info"><img src="https://www.catallaxyservices.com/media/Logo.png" height="133" width="119" /></a></td>
-		<td><a href="https://csmore.info">Catallaxy Services</a></td>
-	</tr>
-	<tr>
-		<td><a href="https://curatedsql.com"><img src="https://www.catallaxyservices.com/media/CuratedSQLLogo.png" height="133" width="119" /></a></td>
-		<td><a href="https://curatedsql.com">Curated SQL</a></td>
-	</tr>
-	<tr>
-		<td><a href="https://www.apress.com/us/book/9781484254608"><img src="https://www.catallaxyservices.com/media/PolyBaseRevealed.png" height="153" width="107" /></a></td>
-		<td><a href="https://www.apress.com/us/book/9781484254608">PolyBase Revealed</a></td>
-	</tr>
+<tr>
+<td><a href="https://csmore.info"><img src="https://www.catallaxyservices.com/media/Logo.png" height="133" width="119" /></a></td>
+<td><a href="https://csmore.info">Catallaxy Services</a></td>
+</tr>
+<tr>
+<td><a href="https://curatedsql.com"><img src="https://www.catallaxyservices.com/media/CuratedSQLLogo.png" height="133" width="119" /></a></td>
+<td><a href="https://curatedsql.com">Curated SQL</a></td>
+</tr>
+<tr>
+<td><a href="https://www.apress.com/us/book/9781484254608"><img src="https://www.catallaxyservices.com/media/PolyBaseRevealed.png" height="153" width="107" /></a></td>
+<td><a href="https://www.apress.com/us/book/9781484254608">PolyBase Revealed</a></td>
+</tr>
 </table>
-@divend
 
-@div[right-40]
-	<br /><br />
-	<a href="https://www.twitter.com/feaselkl"><img src="https://www.catallaxyservices.com/media/HeadShot.jpg" height="358" width="315" /></a>
-	<br />
-	<a href="https://www.twitter.com/feaselkl">@feaselkl</a>
-</div>
-@divend
+[drag=40 100, drop=60 0]
+![Kevin Feasel](https://www.catallaxyservices.com/media/HeadShot.jpg)
+
+[@feaselkl](https://www.twitter.com/feaselkl)
 
 ---?image=presentation/assets/background/wasp.jpg&size=cover&opacity=20
 
@@ -190,10 +187,12 @@ There are two timeout techniques:  sliding window and fixed-length.  Sliding win
 
 ### Other Advice
 
+@ul[list-fade-bullets]
 * Store credentials securely.  We'll cover good password security later.
 * Use robust minimum password criteria.  Don't cap password lengths please!
 * Never send passwords via e-mail.  In fact, you shouldn't know user passwords for your site--that's not secure.
 * Protect session IDs which are in cookies by using HTTPS to transmit cookies and protecting against cross-site scripting risks.
+@ul
 
 ---
 
@@ -235,10 +234,12 @@ Zetetic has a NuGet package which uses BCrypt and 5000 iterations of PBKDF2.
 
 Each method has its own weaknesses:
 
+@ul[list-fade-bullets]
 * PBKDF2 is weak against GPUs
 * BCrypt is weak against FPGAs (exponential CPU but not exponential memory)
 * SCrypt is strong against FPGAs (exponential CPU and exponential memory) but is newer (2009 versus 1999) and not quite as vetted
 * The Argon2 series is even newer than SCrypt (2015) but you can scale memory and CPU independently
+@ul
 
 ---?image=presentation/assets/background/hammer.jpg&size=cover&opacity=40
 
@@ -280,9 +281,11 @@ Valid scopes:  `CurrentUser` and `LocalMachine`.
 
 ### Other Tips
 
+@ul[list-fade-bullets]
 * Use a modern version of TLS to transmit all information.  TLS 1.3 is out and 1.2 is still fine.
 * Discard unnecessary stored data as soon as possible and don't store what you don't need.
 * Disable autocomplete on sensitive forms and disable caching on pages with sensitive data.
+@ul
 
 ---
 
@@ -506,10 +509,10 @@ You might also be displaying error messages with sensitive information:  deploye
 
 ### Security Misconfiguration
 
-Good idea:  using Elmah to store log data.
+Good idea:  using Elmah to store log data.<br />
 Bad idea:  exposing Elmah data to the broader internet.
 
-<img src="presentation/assets/image/Elmah.png" />
+![Websites with Elmah error logs made public](presentation/assets/image/Elmah.png)
 
 ---?image=presentation/assets/background/bucket.jpg&size=cover&opacity=20
 
@@ -552,9 +555,11 @@ Secure trace.asd.  Limit what you write to trace.  For example, don't write conn
 
 ### Other Solutions
 
+@ul[list-fade-bullets]
 * Keep libraries & apps up to date
 * Disable or remove unnecessary ports, services, pages, accounts, privileges, etc.
 * Encrypt sensitive web.config details
+@ul
 
 ---?image=presentation/assets/background/lock.jpg&size=cover&opacity=20
 
@@ -572,8 +577,10 @@ This uses the RSA key on the server to perform symmetric encryption on web.confi
 
 ### Security at Deploy Time
 
+@ul[list-fade-bullets]
 * Use web.config transformations to configure defensively on deployment, removing debugging and tracing logic just in case somebody accidentally includes it in the build.
 * Ensure security within the build.  For example:  fail the build if you have the debug flag set.
+@ul
 
 ---
 
@@ -648,7 +655,7 @@ If you're using ASP.NET MVC, the Razor view engine auto-encodes by default when 
 
 Ever get this error?
 
-<img src="presentation/assets/image/potentiallydangerousrequest.png" />
+![A potentially dangerous request value was detected from the client](presentation/assets/image/potentiallydangerousrequest.png)
 
 ---?image=presentation/assets/background/monkey.jpg&size=cover&opacity=20
 
@@ -701,12 +708,14 @@ You can use the `X-XSS-Protection` browser header to add an additional layer of 
 
 You can use Content Security Policies to define valid domains and subdomains for:
 
+@ul[list-fade-bullets]
 * JavaScript
 * Cascading Stylesheets
 * Images
 * Fonts
 * HTML5 Media (audio, video, etc.)
 * Child frames
+@ul
 
 ---
 
@@ -767,9 +776,11 @@ Never deserialize untrusted binary objects.
 
 ### Other Solutions
 
+@ul[list-fade-bullets]
 * Don't serialize delegates--attackers can use delegates to execute arbitrary code.
 * Don't use .NET remoting.  If you need remoting, you deserve what you get with WCF.  Better just not to use remoting at all.
 * If you generate the message, sign the messages as part of the serialization process and refuse to deserialize messages which are not signed.
+@ul
 
 ---
 
@@ -793,9 +804,11 @@ Never deserialize untrusted binary objects.
 
 Things to think about:
 
+@ul[list-fade-bullets]
 * Old encryption cyphers
 * Old HTTP security protocols (e.g., TLS 1.0 or 1.1)
 * Software with known backdoors or malicious components
+@ul
 
 ---?image=presentation/assets/background/broken-wall.jpg&size=cover&opacity=20
 
@@ -817,10 +830,12 @@ This can be a time-consuming exercise, particularly for large companies with a g
 
 ### Other Solutions
 
+@ul[list-fade-bullets]
 * Having a central NuGet repo can make it easier to keep versions of libraries in sync
 * Look at threat intelligence and exploit databases, as well as third-party tools like Metasploit
 * OWASP Dependency Check can find versions of .NET or Java packages with known vulnerabilities
 * For JavaScript, look at <a href="https://github.com/retirejs/retire.js">retire.js
+@ul
 
 ---
 
@@ -844,11 +859,13 @@ This can be a time-consuming exercise, particularly for large companies with a g
 
 Gut check time:
 
+@ul[list-fade-bullets]
 * Do you log failed login attempts?
 * Do you log successful login attempts?
 * Do you log "valuable" operations?
 * Do you ever look at those logs?
 * Do you know what to look for in those logs?
+@ul
 
 ---?image=presentation/assets/background/bonfire.jpg&size=cover&opacity=20
 
@@ -870,12 +887,14 @@ Simply having the data is an important part of the process.  Then, somebody shou
 
 Things you may want to log:
 
+@ul[list-fade-bullets]
 * Input and output validation failures (e.g., invalid parameters, invalid data encodings)
 * Authentication successes and failures
 * Authorization successes and failures
 * Tampering:  session cookies, querystrings
 * Application errors (syntax and runtime errors)
 * High-risk functionality:  adding/removing users, assigning important permissions, sysadmin duties, accessing sensitive data, data imports
+@ul
 
 ---?image=presentation/assets/background/space.jpg&size=cover&opacity=40
 
@@ -883,10 +902,12 @@ Things you may want to log:
 
 Details you should have:
 
+@ul[list-fade-bullets]
 * When the event occurred
 * Which application, which server, which service, which geolocation, where in the code
 * Who performed the operation (IP address, machine identifier, user account)
 * What event occurred, including event details, severity, and description
+@ul
 
 This list is **NOT** comprehensive!
 
@@ -896,11 +917,13 @@ This list is **NOT** comprehensive!
 
 Details you should <strong>not</strong> have:
 
+@ul[list-fade-bullets]
 * Application source code
 * Session IDs, access tokens, passwords
 * Database connection strings, encryption keys
 * Sensitive personal information:  name, payment card data, bank account data, PHI
 * Information which is illegal to collect or where a user has opted out of collection
+@ul
 
 Include these and you might run afoul of A3. Sensitive Data Exposure.
 
@@ -912,8 +935,22 @@ This has been a quick survey of the OWASP Top 10 Application Security Risks, 201
 
 ---
 
-### For More
+### Wrapping Up
 
-To learn more, go here:  <a href="http://csmore.info/on/owasp">http://CSmore.info/on/owasp</a>
-
-And for help, contact me:  <a href="mailto:feasel@catallaxyservices.com">feasel@catallaxyservices.com</a> | <a href="https://www.twitter.com/feaselkl">@feaselkl</a>
+<p>
+	To learn more, go here:
+	<br />
+	<a href="http://csmore.info/on/owasp">http://CSmore.info/on/owasp</a>
+</p>
+<br />
+<p>
+	And for help, contact me:
+	<br />
+	<a href="mailto:feasel@catallaxyservices.com">feasel@catallaxyservices.com</a> | <a href="https://www.twitter.com/feaselkl">@feaselkl</a>
+</p>
+<br />
+<p>
+	Catallaxy Services consulting:
+	<br />
+	<a href="https://csmore.info/contact">https://CSmore.info/on/contact</a>
+</p>
